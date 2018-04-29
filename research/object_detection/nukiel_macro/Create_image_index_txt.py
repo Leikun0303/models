@@ -6,10 +6,17 @@
 import os 
 
 # 存放xlm文件的文件夹
+<<<<<<< HEAD
 xml_files_path='/home/leikun/temp/AI100-W9/annotations/xmls'
 
 # 输出文件的文件夹
 out_txt_path='/home/leikun/temp/AI100-W9/annotations/'
+=======
+xml_files_path='/home/leikun/temp/quiz-w8-data/annotations/xmls'
+
+# 输出文件的文件夹
+out_txt_path='/home/leikun/temp/quiz-w8-data/imagesets/'
+>>>>>>> 1f9c43e0f3a46f765688fb7c8c1c180a5d9b93e8
 
 if not os.path.exists(out_txt_path):
     os.makedirs(out_txt_path)
@@ -29,9 +36,21 @@ import random
 random.shuffle(image_index)  
 
 # 然后输出文件
+<<<<<<< HEAD
 f3 = open(out_txt_path+'trainval.txt','w')
 f4 = open(out_txt_path+'test.txt','w')
 
+=======
+f1 = open(out_txt_path+'train.txt','w')
+f2 = open(out_txt_path+'val.txt','w')
+f3 = open(out_txt_path+'trainval.txt','w')
+f4 = open(out_txt_path+'test.txt','w')
+
+for i in range(134):
+    f1.write(str(image_index[i])+'\n')
+for i in range(134,154):
+    f2.write(str(image_index[i])+'\n')
+>>>>>>> 1f9c43e0f3a46f765688fb7c8c1c180a5d9b93e8
 for i in range(154):
     f3.write(str(image_index[i])+'\n')
 for i in range(154,155):

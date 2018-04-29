@@ -1,4 +1,8 @@
 {
+<<<<<<< HEAD
     "python.pythonPath": "/home/leikun/anaconda3/envs/py27/bin/python2.7"
     // "/home/leikun/anaconda3/bin/python3.6"
+=======
+    "python.pythonPath": "/home/leikun/anaconda3/bin/python3.6"
+>>>>>>> 1f9c43e0f3a46f765688fb7c8c1c180a5d9b93e8
 }
