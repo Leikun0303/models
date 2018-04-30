@@ -162,12 +162,15 @@ def dict_to_tf_example(data,
 
     truncated.append(int(obj['truncated']))
     poses.append(obj['pose'])
-
+    
+    # 取掉扩展名
+    image_name=os.path.splitext(data['filename'])[0]
+    
   example = tf.train.Example(features=tf.train.Features(feature={
       'image/height': dataset_util.int64_feature(height),
       'image/width': dataset_util.int64_feature(width),
-      'image/filename': dataset_util.bytes_feature(data['filename']),
-      'image/source_id': dataset_util.bytes_feature(data['filename']),
+      'image/filename': dataset_util.bytes_feature(image_name), #此处有修改
+      'image/source_id': dataset_util.bytes_feature(image_name), #此处有修改
       'image/key/sha256': dataset_util.bytes_feature(key),
       'image/encoded': dataset_util.bytes_feature(encoded_jpg),
       'image/format': dataset_util.bytes_feature('jpeg'),
@@ -227,10 +230,11 @@ def create_tf_record(output_filename,
 def main(_):
 
   # 数据文件夹的存放路径,/home/leikun/temp/AI100-W9
-  data_dir = FLAGS.data_dir
+  data_dir ='/home/leikun/temp/AI100-W9' # FLAGS.data_dir
 
   # label_items.txt文件路径/home/leikun/temp/AI100-W9/labels_items.txt
-  label_map_dict = label_map_util.get_label_map_dict(FLAGS.label_map_path)
+  label_path = '/home/leikun/temp/AI100-W9/labels_items.txt'
+  label_map_dict = label_map_util.get_label_map_dict(label_path) # (FLAGS.label_map_path)
 
   logging.info('Reading from Pet dataset.')
   # 在data_dir下有:
@@ -255,12 +259,17 @@ def main(_):
   num_train = int(0.7 * num_examples)
   train_examples = examples_list[:num_train]
   val_examples = examples_list[num_train:]
+  
+  print('%d training and %d validation examples.',
+               len(train_examples), len(val_examples))
+  
   logging.info('%d training and %d validation examples.',
                len(train_examples), len(val_examples))
 
   # tf.record数据的输出路径
-  train_output_path = os.path.join(FLAGS.output_dir, 'pet_train.record')
-  val_output_path = os.path.join(FLAGS.output_dir, 'pet_val.record')
+  output_dir = '/home/leikun/temp/AI100-W9/out'
+  train_output_path = os.path.join(output_dir, 'pet_train.record') # (FLAGS.output_dir, 'pet_train.record')
+  val_output_path = os.path.join(output_dir, 'pet_val.record') # (FLAGS.output_dir, 'pet_val.record')
 
   # 生成训练集数据
   create_tf_record(train_output_path, label_map_dict, annotations_dir,image_dir, train_examples)
